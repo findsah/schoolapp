@@ -17,7 +17,7 @@ export default class componentName extends Component {
                         </View>
 
                         <View style={styles.view3sty}>
-                            <Text style={styles.text1sty}>Multipule choice questions</Text>
+                            <Text style={styles.text1sty}>السوال</Text>
                         </View>
                         <View style={styles.view4sty}>
                             <Text style={styles.text2sty}>
@@ -34,8 +34,8 @@ export default class componentName extends Component {
                     />
 
                     <View style={styles.inputview}>
-                        <Input placeholder='Questions Text ' placeholderTextColor='#FFFFFF'
-                            style={{ fontSize: 25 }}
+                        <Input placeholder='نص السوال' placeholderTextColor='#FFFFFF'
+                            style={{ fontSize: 35 }}
                         />
                     </View>
 
@@ -49,12 +49,12 @@ export default class componentName extends Component {
                         marginTop: '10%'
                     }}>
                         <View style={styles.inputrowview}>
-                            <Input placeholder='Pic-1 ' placeholderTextColor='#FFFFFF'
+                            <Input placeholder='خيارـ١ ' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 25 }}
                             />
                         </View>
                         <View style={styles.inputrowview}>
-                            <Input placeholder='Pic-02 ' placeholderTextColor='#FFFFFF'
+                            <Input placeholder='خيارـ٢ ' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 25 }}
                             />
                         </View>
@@ -73,12 +73,12 @@ export default class componentName extends Component {
                         marginBottom: '10%'
                     }}>
                         <View style={styles.inputrowview}>
-                            <Input placeholder='Pic-3 ' placeholderTextColor='#FFFFFF'
+                            <Input placeholder='خيارـ٣ ' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 25 }}
                             />
                         </View>
                         <View style={styles.inputrowview}>
-                            <Input placeholder='Pic-04 ' placeholderTextColor='#FFFFFF'
+                            <Input placeholder='خيارـ٣ ' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 25 }}
                             />
                         </View>
@@ -149,7 +149,7 @@ let styles = StyleSheet.create({
         marginBottom: '5%'
     },
     text1sty: {
-        fontSize: 25,
+        fontSize: 35,
         color: 'white',
         textAlign: 'center'
     },

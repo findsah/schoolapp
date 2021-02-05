@@ -10,7 +10,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.11.0-alpha.0",
     "@react-native-community/cli-platform-android": "^4.13.0",
+    "email-validator": "^2.0.4",
     "hammerjs": "^2.0.8",
     "native-base": "^2.15.2",
     "react": "16.13.1",

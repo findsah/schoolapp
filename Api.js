@@ -86,8 +86,6 @@ export default class Register extends Component {
 
 
 
-
-
                     }
                     else {
                         Alert.alert(
@@ -131,8 +129,6 @@ export default class Register extends Component {
 
                     <TouchableOpacity style={styles.loginbuttonsty}
                         onPress={() => this.login()}
-                        onPress={() => Actions.Dashbord()}
-
 
                     >
                         <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>

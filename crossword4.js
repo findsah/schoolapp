@@ -1,132 +1,141 @@
 import { View, Icon, Input } from 'native-base';
 import React, { Component } from 'react';
-import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+const HEIGHT = Dimensions.get('screen').height / 3;
+
 export default class componentName extends Component {
     render() {
         return (
             <ScrollView>
-                <View style={styles.container}>
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <TouchableOpacity
-                                onPress={() => Actions.Levels()}>
-                                <Icon style={styles.lefticonsty} type='Entypo' name='chevron-thin-left' />
-                            </TouchableOpacity>
+                <View style={{ height: '100%', flex: 1 }}>
+                    <View style={styles.container}>
+                        <View style={styles.view1sty}>
+                            <View style={styles.view2sty}>
+                                <TouchableOpacity
+                                    onPress={() => Actions.Levels()}>
+                                    <Icon style={styles.lefticonsty} type='Entypo' name='chevron-thin-left' />
+                                </TouchableOpacity>
 
-                        </View>
-                        <View style={styles.view3sty}>
-                            <Text style={styles.text1sty}>  الكلمات المتقاطعة</Text>
-                        </View>
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}> 1 </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star' />
+                            </View>
+                            <View style={styles.view3sty}>
+                                <Text style={styles.text1sty}>  الكلمات المتقاطعة</Text>
+                            </View>
+                            <View style={styles.view4sty}>
+                                <Text style={styles.text2sty}> 1 </Text>
+                                <Icon style={styles.stariconsty} type='Entypo' name='star' />
+                            </View>
                         </View>
                     </View>
-                </View>
 
 
-                <View style={styles.container}>
-                    <Image
-                        source={require("../Demo/Pic/crossword3image.png")}
-                        style={{ marginTop: '25%', width: '36%', height: '22%' }}
-                    />
-                    <View style={styles.maincardviewsty}>
-                        <View style={styles.headerviewsty}>
-                            <Text style={styles.text1sty}>أكمل...</Text>
-                        </View>
-
-
-
-
-
-
-
-                        <View style={styles.cardtextviewsty}>
-                            <View style={{ width: '25%' }}>
-                                <Text style={styles.text1sty}>
-                                    ____
-                            </Text>
+                    <View style={styles.container}>
+                        <Image
+                            source={require("../Demo/Pic/crossword3image.png")}
+                            style={{ marginTop: '25%', width: '36%', height: '22%' }}
+                        />
+                        <View style={styles.maincardviewsty}>
+                            <View style={styles.headerviewsty}>
+                                <Text style={styles.text1sty}>أكمل...</Text>
                             </View>
-                            <View style={{ width: '84%', justifyContent: 'center' }}>
-                                <Text style={styles.text1sty}>
-                                    أطلب العلم ولوفي
+
+
+
+
+
+
+
+                            <View style={styles.cardtextviewsty}>
+                                <View style={{ width: '25%' }}>
+                                    <Text style={styles.text1sty}>
+                                        ____
                             </Text>
+                                </View>
+                                <View style={{ width: '84%', justifyContent: 'center' }}>
+                                    <Text style={styles.text1sty}>
+                                        أطلب العلم ولوفي
+                            </Text>
+                                </View>
                             </View>
-                        </View>
-                        <TouchableOpacity style={styles.cardfooterviewsty}>
-                            <Text style={styles.text1sty}>
-                                إحذف حرف
+                            <TouchableOpacity style={styles.cardfooterviewsty}>
+                                <Text style={styles.text1sty}>
+                                    إحذف حرف
                         </Text>
-                            <Icon type='Octicons' name='diff-removed'
-                                style={{ color: 'white', marginLeft: '3%', }}
-                            />
-                        </TouchableOpacity>
+                                <Icon type='Octicons' name='diff-removed'
+                                    style={{ color: 'white', marginLeft: '3%', }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+
+                        <View style={styles.textboxviewsty}>
+                            <View style={styles.inputview}>
+
+                            </View>
+                            <View style={styles.inputview}>
+
+                            </View>
+                            <View style={styles.inputview}>
+
+                            </View>
+                            <View style={styles.inputview}>
+                                <Text style={styles.text1sty}>ح</Text>
+                            </View>
+                            <View style={styles.inputview}>
+
+                            </View>
+                        </View>
+
+
+                        <View style={{ height: '40%' }}>
+
+                            <View style={styles.textbox1viewsty}>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                            </View>
+
+
+                            <View style={[styles.textbox1viewsty]}>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+                                <View style={styles.input1view}>
+
+                                </View>
+
+                            </View>
+
+                        </View>
+
                     </View>
-
-
-                    <View style={styles.textboxviewsty}>
-                        <View style={styles.inputview}>
-
-                        </View>
-                        <View style={styles.inputview}>
-
-                        </View>
-                        <View style={styles.inputview}>
-
-                        </View>
-                        <View style={styles.inputview}>
-                            <Text style={styles.text1sty}>ح</Text>
-                        </View>
-                        <View style={styles.inputview}>
-
-                        </View>
-                    </View>
-
-
-                    <View style={styles.textbox1viewsty}>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                    </View>
-
-
-                    <View style={styles.textbox1viewsty}>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                        <View style={styles.input1view}>
-
-                        </View>
-                    </View>
-
                 </View>
             </ScrollView>
 
@@ -205,6 +214,7 @@ let styles = StyleSheet.create({
     maincardviewsty: {
         backgroundColor: '#114E76',
         width: '80%',
+
         height: 380,
         borderRadius: 15,
         alignItems: 'center',
@@ -240,14 +250,16 @@ let styles = StyleSheet.create({
         flexDirection: 'row',
         width: '70%',
         padding: 10,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+
     },
     textbox1viewsty: {
 
         flexDirection: 'row',
         width: '98%',
-        padding: 15,
-        justifyContent: 'space-between'
+        padding: 10,
+        justifyContent: 'space-between',
+
     },
     input1view: {
         flexDirection: 'row',
