@@ -1,171 +1,96 @@
 import { View, Icon, Input } from 'native-base';
 import React, { Component } from 'react';
-import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+
 export default class componentName extends Component {
-    render() {
+    constructor(props) {
+        super(props)
+        this.state = {
+            courses: []
+        }
+
+    }
+    componentDidMount = () => {
+        this.Get_courses()
+    }
+    Get_courses = async (id) => {
+        //let userid = await AsyncStorage.getItem('userid')
+        let userid = 1
+
+
+        //console.log('id in total likes api', userid)
+
+        let response = await fetch(
+            'https://crossword-app-backend.herokuapp.com/app/courses/' + userid + '/',
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            },
+        )
+            .then(response => response.json())
+            .then(responseJson => {
+                //console.log('courses', responseJson);
+                this.setState({
+                    courses: responseJson.courses
+                })
+                //console.log('courses', this.state.courses)
+                return responseJson;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        //  console.log('data:>>',response)
+
+        return response;
+    }
+    renderItem = (data) => {
+
+        console.log('courses in render', data)
+
         return (
-            <ScrollView>
-                <View style={styles.container}>
+            <View style={styles.view1sty}>
+                <View style={styles.view2sty}>
+                    <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
+                </View>
 
+                <TouchableOpacity
+                    style={styles.view3sty}
+                    onPress={() => Actions.Levels()}
+                >
+                    <Text style={styles.text1sty}>{data?.item?.name}</Text>
+                </TouchableOpacity>
 
-                    <View style={{ marginRight: '88%' }}>
-                        <Icon style={{ color: '#000002', fontSize: 55 }} type='Entypo' name='menu' />
-                    </View>
-
-                    <Image
-                        source={require("../Demo/Pic/courseimage.png")}
-                    />
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
-                        </View>
-
-                        <TouchableOpacity
-                            style={styles.view3sty}
-                            onPress={() => Actions.Levels()}
-                        >
-                            <Text style={styles.text1sty}> Course-01</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                0
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-
-                        </View>
-
-                    </View>
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
-                        </View>
-
-                        <TouchableOpacity
-                            style={styles.view3sty}
-                            onPress={() => Actions.Levels()}
-                        >
-                            <Text style={styles.text1sty}> Course-02</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                0
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-
-                        </View>
-                    </View>
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
-                        </View>
-
-                        <TouchableOpacity
-                            style={styles.view3sty}
-                            onPress={() => Actions.Levels()}
-                        >
-                            <Text style={styles.text1sty}> Course-03</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                0
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-
-                        </View>
-                    </View>
-
-
-
-
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
-                        </View>
-                        <TouchableOpacity
-                            style={styles.view3sty}
-                            onPress={() => Actions.Levels()}
-                        >
-                            <Text style={styles.text1sty}> Course-04</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                0
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-
-                        </View>
-
-                    </View>
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
-                        </View>
-
-                        <TouchableOpacity
-                            style={styles.view3sty}
-                            onPress={() => Actions.Levels()}
-                        >
-                            <Text style={styles.text1sty}> Course-05</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                0
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-
-                        </View>
-                    </View>
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
-                        </View>
-
-                        <TouchableOpacity
-                            style={styles.view3sty}
-                            onPress={() => Actions.Levels()}
-                        >
-                            <Text style={styles.text1sty}> Course-06</Text>
-                        </TouchableOpacity>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                0
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-
-                        </View>
-                    </View>
-
-
-
-
-
-
+                <View style={styles.view4sty}>
+                    <Text style={styles.text2sty}>
+                        {data?.index}
+                    </Text>
+                    <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
 
                 </View>
-            </ScrollView>
+
+            </View>
+        )
+    }
+    render() {
+        return (
+
+            <View style={styles.container}>
+                <View style={{ marginRight: '88%' }}>
+                    <Icon style={{ color: '#000002', fontSize: 55 }} type='Entypo' name='menu' />
+                </View>
+                <Image
+                    source={require("../Demo/Pic/courseimage.png")}
+                />
+                <FlatList
+                    data={this.state.courses}
+                    renderItem={this.renderItem}
+                    keyExtractor={item => item.id}
+                />
+            </View>
         );
     }
 }
@@ -263,8 +188,4 @@ let styles = StyleSheet.create({
 
 
     },
-
-
-
-
 });

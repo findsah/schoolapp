@@ -1,78 +1,90 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Input } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Actions } from 'react-native-router-flux';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Register extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
-            stcivilid: '',
-            stPassword: '',
-            stsAuthToken: '',
-            stsIsLoading: false,
-            isLoading: false,
+            civilid: '',
+            password: '',
+            userdata: '',
+            loader: false,
+
         }
     }
-    handlecivilid = (text) => {
-        this.setState({ stcivilid: text })
+
+    handelcivilid = (text) => {
+        this.setState({ civilid: text })
+        //console.log('civilid', this.state.civilid);
     }
-    handlePassword = (text) => {
-        this.setState({ stPassword: text })
+    handelpassword = (text) => {
+        this.setState({ password: text })
+
     }
 
-    manageLoading = (value) => {
-        setState({ isLoading: value })
-    }
-
-    componentDidMount = () => {
-        this.getData();
-    };
-
-    getData = () => {
-        AsyncStorage.getItem('authToken', (error, token) => {
-            console.log(token)
-
-        });
-    };
-
-    login = () => {
 
 
-        if (this.state.stcivilid === '' || this.state.stPassword === '') {
+    login = async () => {
+        if (this.state.civilid === '' || this.state.password === '') {
+            alert('Please Enter required field');
 
-            alert('Please Enter Email and Password');
         }
+
         else {
-            console.log('request send')
+            console.log('Success')
+
+
+            // return
             let formdata = new FormData()
-            formdata.append('civilid', this.state.stcivilid)
-            formdata.append('password', this.state.stPassword)
-            formdata.append('request', 'login')
-            fetch('https://crossword-app-backend.herokuapp.com/user/login/', {
+            formdata.append('civil_id', this.state.civilid)
+            formdata.append('password', this.state.password)
+
+            console.log('formdata', formdata);
+            //return
+            this.setState({
+
+                loader: true
+            })
+            await fetch('https://crossword-app-backend.herokuapp.com/user/login/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Key': 'c05bd74d95bc5f024625eea3be19540c'
+
                 },
                 body: formdata
-            })
-                .then((response) => response.json())
+            }).then((response) => response.json())
+                // console.log(response)
 
-                .then((responsejosn) => {
-                    console.log(responsejosn)
-                    const token = responsejosn.token;
+                .then((data) => {
+                    console.log('Data', data)
+                    const token = data.token;
+
+                    // console.log('ID==========', data.user_id)
+
+                    AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
+                    this.setState({
+                        userdata: data,
+                        loader: false
+                    })
+                    Actions.Dashbord()
+                    return
+
+
                     if (responsejosn.status) {
                         this.setState({ stsAuthToken: responsejosn.token })
 
 
                         AsyncStorage.setItem('authToken', JSON.stringify(token))
+                        Actions.Dashbord()
+
                         console.log(responsejosn.token)
 
-                        console.log('response send')
+                        console.log('response send', responsejosn)
                     }
                     else {
                         alert(responsejosn.message)
@@ -83,31 +95,21 @@ export default class Register extends Component {
                         this.setState({ stsAuthToken: responsejosn.success.token })
                         AsyncStorage.setItem('authToken', JSON.stringify(token))
                         console.log(responsejosn.token)
-
-
-
-
-
                     }
                     else {
                         Alert.alert(
                             "Please enter the valid Id & Password ")
-
-
                     }
                     console.log(responsejosn)
 
-
                 })
+            console.log('Login Entered email and password', this.state.stcivilid, ' ', this.state.stPassword, this.state.stname, ' ', this.state.stclass, ' ')
 
-            console.log('Login Entered email and password', this.state.stcivilid, ' ', this.state.stPassword)
-            //this.props.navigation.navigate('Home')
-            // onPress={() => this.props.navigation.navigate('Drawer')}
         }
-    }
+    };
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
                 <ImageBackground style={styles.imagesty}
                     source={require("../Demo/Pic/Background.png")}>
 
@@ -116,7 +118,7 @@ export default class Register extends Component {
                     <Text style={styles.text1sty}>الرقم المدني</Text>
                     <View style={styles.inputview}>
                         <Input placeholder='أدخل الرقم المدني' placeholderTextColor='#FFFFFF'
-                            onChangeText={(text) => this.handlecivilid(text)}
+                            onChangeText={(text) => this.handelcivilid(text)}
                             style={{ fontSize: 25 }}
                         />
                     </View>
@@ -124,20 +126,24 @@ export default class Register extends Component {
                     <Text style={styles.text1sty}>كلمة المرور</Text>
                     <View style={styles.inputview}>
                         <Input placeholder='كلمة المرور' placeholderTextColor='#FFFFFF'
-                            onChangeText={(text) => this.handlePassword(text)}
+                            onChangeText={(text) => this.handelpassword(text)}
                             style={{ fontSize: 25 }}
                         />
                     </View>
 
+
                     <TouchableOpacity style={styles.loginbuttonsty}
                         onPress={() => this.login()}
-                        onPress={() => Actions.Dashbord()}
-
 
                     >
-                        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>
+                        {!this.state.loader ? <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>
                             تسجيل دخول
                         </Text>
+                            :
+                            <ActivityIndicator size="large" color="#fff" />
+                        }
+
+
                     </TouchableOpacity>
 
 
@@ -145,7 +151,7 @@ export default class Register extends Component {
                 </View>
 
 
-                <TouchableOpacity style={[styles.loginbuttonsty, { position: 'absolute', bottom: '2%', backgroundColor: '#007A3D', height: 20, width: "40%" }]}
+                <TouchableOpacity style={[styles.loginbuttonsty, { backgroundColor: '#007A3D', height: 40, width: "40%" }]}
                     onPress={() => Actions.Register()}
                 >
                     <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 22 }}>تسجيل جديد</Text>
@@ -153,7 +159,7 @@ export default class Register extends Component {
 
 
 
-            </View>
+            </ScrollView>
 
         );
     }
@@ -162,7 +168,7 @@ export default class Register extends Component {
 let styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
+        //alignItems: 'center',
         backgroundColor: '#AED0EE'
     },
 

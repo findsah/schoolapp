@@ -4,6 +4,20 @@ import { Text, StyleSheet, Image, ScrollView, TouchableOpacity, _Text } from 're
 import { Actions } from 'react-native-router-flux';
 
 export default class componentName extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            courses: [
+                { id: 1, name: 'Arabic' },
+                { id: 2, name: 'English' },
+                { id: 3, name: 'Math' },
+                { id: 4, name: 'Genral' },
+                { id: 5, name: 'Arabic' },
+
+            ]
+        }
+    }
+
     render() {
         return (
             <ScrollView>

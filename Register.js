@@ -1,15 +1,111 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, ScrollView } from 'react-native';
 import { Input } from 'native-base';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Actions } from 'react-native-router-flux';
 
 export default class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        };
+            name: '',
+            civilid: '',
+            class: '',
+            password: '',
+            userdata: '',
+
+        }
+    }
+    handelname = (v) => {
+        this.setState({ name: v })
+        //console.log('name', this.state.name);
+    }
+    handelcivilid = (text) => {
+        this.setState({ civilid: text })
+
+    }
+    handelclass = (text) => {
+        this.setState({ class: text })
+
+    }
+    handelpassword = (text) => {
+        this.setState({ password: text })
+
     }
 
+
+
+    Register = () => {
+        if (this.state.name === '' || this.state.class === '' || this.state.civilid === '' || this.state.Password === '') {
+            alert('Please Enter required field');
+
+        }
+
+        else {
+            console.log('Success')
+
+
+
+            let formdata = new FormData()
+            formdata.append('name', this.state.name)
+            formdata.append('s_class', this.state.class)
+            formdata.append('civil_id', this.state.civilid)
+            formdata.append('password', this.state.password)
+
+            //console.log('formdata', formdata);
+
+
+
+            fetch('https://crossword-app-backend.herokuapp.com/user/register/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+
+                },
+                body: formdata
+            }).then((response) => response.json())
+                // console.log(response)
+
+                .then((data) => {
+                    console.log('Data', data)
+                    //const token = data.token;
+                    this.setState({
+                        userdata: data
+                    })
+                    Actions.Login()
+                    return
+                    if (responsejosn.status) {
+                        this.setState({ stsAuthToken: responsejosn.token })
+
+
+                        AsyncStorage.setItem('authToken', JSON.stringify(token))
+                        Actions.Dashbord()
+
+                        console.log(responsejosn.token)
+
+                        console.log('response send', responsejosn)
+                    }
+                    else {
+                        alert(responsejosn.message)
+
+
+                    }
+                    if (responsejosn) {
+                        this.setState({ stsAuthToken: responsejosn.success.token })
+                        AsyncStorage.setItem('authToken', JSON.stringify(token))
+                        console.log(responsejosn.token)
+                    }
+                    else {
+                        Alert.alert(
+                            "Please enter the valid Id & Password ")
+                    }
+                    console.log(responsejosn)
+
+                })
+            console.log('Login Entered email and password', this.state.stcivilid, ' ', this.state.stPassword, this.state.stname, ' ', this.state.stclass, ' ')
+
+        }
+    };
     render() {
         return (
             <ScrollView>
@@ -23,6 +119,7 @@ export default class Register extends Component {
                         <View style={styles.inputview}>
                             <Input placeholder=' الاسم' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 28 }}
+                                onChangeText={(v) => this.handelname(v)}
                             />
                         </View>
 
@@ -30,6 +127,7 @@ export default class Register extends Component {
                         <View style={styles.inputview}>
                             <Input placeholder='الرقم المدنى' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 28 }}
+                                onChangeText={(v) => this.handelcivilid(v)}
                             />
                         </View>
 
@@ -37,6 +135,7 @@ export default class Register extends Component {
                         <View style={styles.inputview}>
                             <Input placeholder='الصف' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 28 }}
+                                onChangeText={(v) => this.handelclass(v)}
                             />
                         </View>
 
@@ -44,11 +143,13 @@ export default class Register extends Component {
                         <View style={styles.inputview}>
                             <Input placeholder='كلمة المرور' placeholderTextColor='#FFFFFF'
                                 style={{ fontSize: 28 }}
+                                onChangeText={(v) => this.handelpassword(v)}
                             />
                         </View>
 
                         <TouchableOpacity style={styles.loginbuttonsty}
-                            onPress={() => Actions.Dashbord()}
+                            onPress={() => this.Register()}
+
                         >
                             <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 25 }}>تسجيل</Text>
                         </TouchableOpacity>
@@ -59,7 +160,7 @@ export default class Register extends Component {
 
                     <TouchableOpacity
                         style={[{ backgroundColor: '#007A3D', alignItems: 'center', justifyContent: 'center', height: 45, width: "30%", marginBottom: 20, borderRadius: 8, marginTop: '5%' }]}
-                        onPress={() => Actions.Login()}
+                    //onPress={() => Actions.Login()}
                     >
                         <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 22 }}>تسجيل دخول</Text>
                     </TouchableOpacity>
