@@ -61,9 +61,10 @@ export default class componentName extends Component {
                         <Image
 
                             source={require("../Demo/Pic/Dashbordimage2.png")}
+                            style={{ width: 300, height: 200 }}
 
                         />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={styles.textsty}>الوليد</Text>
                             <Text style={styles.textsty}>السالم</Text>
                             <Text style={styles.textsty}>الخالد</Text>
@@ -87,11 +88,11 @@ let styles = StyleSheet.create({
     },
 
     inputviewsty: {
-        width: '55%',
+        width: '60%',
     },
 
     inputview: {
-        height: 50,
+        height: 70,
         width: '100%',
         borderWidth: .6,
         borderRadius: 8,
@@ -104,11 +105,15 @@ let styles = StyleSheet.create({
     },
     textsty: {
         color: '#FFFFFF',
-        fontSize: 30
+        fontSize: 28
     },
     imagesty: {
         marginTop: '10%',
-        paddingBottom: 30
+        paddingBottom: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '60%',
+        //backgroundColor: 'red'
 
 
     }

@@ -109,7 +109,7 @@ export default class Register extends Component {
     };
     render() {
         return (
-            <ScrollView contentContainerStyle={{ alignItems: 'center' }} style={styles.container}>
+            <ScrollView contentContainerStyle={{ alignItems: 'center', padding: 5 }} style={styles.container}>
                 <ImageBackground style={styles.imagesty}
                     source={require("../Demo/Pic/Background.png")}>
 
@@ -136,7 +136,7 @@ export default class Register extends Component {
                         onPress={() => this.login()}
 
                     >
-                        {!this.state.loader ? <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 22 }}>
+                        {!this.state.loader ? <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
                             تسجيل دخول
                         </Text>
                             :
@@ -151,10 +151,10 @@ export default class Register extends Component {
                 </View>
 
 
-                <TouchableOpacity style={[styles.loginbuttonsty, { backgroundColor: '#007A3D', height: 40, width: "40%" }]}
+                <TouchableOpacity style={[styles.loginbuttonsty, { backgroundColor: '#007A3D', height: 40, width: "50%", }]}
                     onPress={() => Actions.Register()}
                 >
-                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 22 }}>تسجيل جديد</Text>
+                    <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 20 }}>تسجيل جديد</Text>
                 </TouchableOpacity>
 
 
@@ -179,7 +179,7 @@ let styles = StyleSheet.create({
     },
 
     inputview: {
-        height: 50,
+        height: 55,
         width: '100%',
         borderWidth: .6,
         borderRadius: 8,
@@ -188,7 +188,8 @@ let styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '3%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+
     },
     text1sty: {
 
@@ -201,7 +202,7 @@ let styles = StyleSheet.create({
 
     },
     view1sty: {
-        width: '55%',
+        width: '65%',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 13,

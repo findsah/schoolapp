@@ -12,6 +12,7 @@ import Dashbord from './Dashbord';
 import Levels from './Levels';
 import Register from './Register';
 import Pointstable from './Pointstable';
+import Aboutus from './Aboutus';
 
 
 export default class App extends Component {
@@ -25,6 +26,7 @@ export default class App extends Component {
                     <Scene key="Homepage" initial={Homepage} component={Homepage} hideNavBar={true} />
                     <Scene key="Login" component={LogIn} hideNavBar={true} />
                     <Scene key="Register" component={Register} hideNavBar={true} />
+                    <Scene key="Aboutus" component={Aboutus} hideNavBar={true} />
                     <Scene key="Dashbord" component={Dashbord} hideNavBar={true} />
                     <Scene key="courses" component={courses} hideNavBar={true} />
                     <Scene key="Pointstable" component={Pointstable} hideNavBar={true} />

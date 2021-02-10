@@ -188,7 +188,8 @@ let styles = StyleSheet.create({
     },
 
     inputview: {
-        height: 53,
+
+        height: 55,
         width: '100%',
         borderWidth: .6,
         borderRadius: 8,
@@ -210,7 +211,7 @@ let styles = StyleSheet.create({
 
     },
     view1sty: {
-        width: '55%',
+        width: '65%',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 13,

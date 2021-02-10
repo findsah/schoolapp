@@ -39,15 +39,12 @@ export default class Register extends Component {
                             <Text style={styles.textsty}>تسجيل جديد </Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.inputview}>
+                        <TouchableOpacity
+                            style={styles.inputview}
+                            onPress={() => Actions.Aboutus()}
+                        >
                             <Text style={styles.textsty}>عن المدرسة</Text>
                         </TouchableOpacity>
-
-
-
-
-
-
                     </View>
 
 

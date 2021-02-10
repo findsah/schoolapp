@@ -170,7 +170,7 @@ let styles = StyleSheet.create({
         marginBottom: '5%'
     },
     text1sty: {
-        fontSize: 25,
+        fontSize: 23,
         color: 'white'
     },
     text2sty: {
