@@ -8,7 +8,8 @@ export default class componentName extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            courses: []
+            courses: [],
+
         }
 
     }
@@ -16,8 +17,8 @@ export default class componentName extends Component {
         this.Get_courses()
     }
     Get_courses = async (id) => {
-        //let userid = await AsyncStorage.getItem('userid')
-        let userid = 1
+        let userid = await AsyncStorage.getItem('userid')
+        //let userid = 1
 
 
         //console.log('id in total likes api', userid)
@@ -34,7 +35,18 @@ export default class componentName extends Component {
             .then(response => response.json())
             .then(responseJson => {
                 //console.log('courses', responseJson);
+
+
+
+                // const token = data.token;
+                // AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
+
+
+
+
+
                 this.setState({
+                    //userdata: data,
                     courses: responseJson.courses
                 })
                 //console.log('courses', this.state.courses)
@@ -59,7 +71,8 @@ export default class componentName extends Component {
 
                 <TouchableOpacity
                     style={styles.view3sty}
-                    onPress={() => Actions.Levels()}
+                    onPress={() => Actions.Levels({ courseId: data?.item?.id })}
+                //</View>onPress={() => Actions.Levels(data?.item?.id)}
                 >
                     <Text style={styles.text1sty}>{data?.item?.name}</Text>
                 </TouchableOpacity>

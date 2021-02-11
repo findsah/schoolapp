@@ -2,7 +2,53 @@ import { View, Icon, Input } from 'native-base';
 import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+import localStorage from '@react-native-community/local-storage';
+
 export default class componentName extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            levels: []
+        }
+    }
+    componentDidMount = async () => {
+        this.Get_levels()
+        console.log("courseid==============", this.props?.courseId)
+
+    }
+    Get_levels = async (id) => {
+        localStorage.getItem("Levels", JSON.stringify(levels));
+        var courseId = JSON.parse(localStorage.getItem("courseId"));
+        //let courseId = await AsyncStorage.getItem('courseId')
+        //let courseIDD = this.props?.courseId
+        //let userid = 1
+        let response = await fetch(
+            'https://crossword-app-backend.herokuapp.com/app/levels/' + this.props?.courseId + '/',
+            {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            },
+        )
+            .then(response => response.json())
+            .then(responseJson => {
+                console.log('Responce==========ifj', responseJson)
+                return
+                this.setState({
+                    levels: responseJson.levels
+                })
+                console.log("id==========", this.state.levels)
+
+                //return responseJson;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        //  console.log('data:>>',response)
+        return response;
+    }
     render() {
         return (
 
@@ -32,7 +78,6 @@ export default class componentName extends Component {
                         <Image
                             source={require("../Demo/Pic/level1.png")}
                         //resizeMode='cover'
-
                         />
                     </TouchableOpacity>
                     <View style={styles.image1viewsty}>
@@ -56,7 +101,6 @@ export default class componentName extends Component {
                     </TouchableOpacity>
                 </View>
 
-
                 <View style={styles.mainimage2viewsty}>
                     <View style={styles.image1viewsty}>
                         <Image
@@ -78,8 +122,6 @@ export default class componentName extends Component {
                     </View>
                 </View>
 
-
-
                 <View style={styles.mainimage2viewsty}>
                     <View style={styles.image1viewsty}>
                         <Image
@@ -100,21 +142,7 @@ export default class componentName extends Component {
                         />
                     </View>
                 </View>
-
-
-
-
-
-
-
-
-
-
-
-
-
             </View>
-
         );
     }
 }
@@ -125,22 +153,15 @@ let styles = StyleSheet.create({
         backgroundColor: '#AED0EE',
         alignItems: 'center'
     },
-
-
-
     stariconsty: {
         color: '#FFD800',
         fontSize: 35,
         marginBottom: '5%'
     },
-
-
-
     view1sty: {
         flexDirection: 'row',
         width: '100%',
         height: 75,
-
     },
     view2sty: {
         flexDirection: 'row',
@@ -202,12 +223,4 @@ let styles = StyleSheet.create({
     imagesty: {
 
     }
-
-
-
-
-
-
-
-
 });
