@@ -16,6 +16,9 @@ export default class componentName extends Component {
     componentDidMount = () => {
         this.Get_courses()
     }
+    goLevel = () => {
+
+    }
     Get_courses = async (id) => {
         let userid = await AsyncStorage.getItem('userid')
         //let userid = 1
@@ -31,25 +34,16 @@ export default class componentName extends Component {
                     'Accept': 'application/json',
                 },
             },
-        )
-            .then(response => response.json())
+        ).then(response => response.json())
             .then(responseJson => {
                 //console.log('courses', responseJson);
-
-
-
                 // const token = data.token;
                 // AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
-
-
-
-
-
                 this.setState({
                     //userdata: data,
                     courses: responseJson.courses
                 })
-                //console.log('courses', this.state.courses)
+                // console.log('courses++++++++++++++++++++++', this.state.courses)
                 return responseJson;
             })
             .catch(error => {
@@ -61,7 +55,7 @@ export default class componentName extends Component {
     }
     renderItem = (data) => {
 
-        console.log('courses in render', data)
+        // console.log('courses in render', data)
 
         return (
             <View style={styles.view1sty}>

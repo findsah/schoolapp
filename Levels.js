@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
-import localStorage from '@react-native-community/local-storage';
+//import localStorage from '@react-native-community/local-storage';
 
 export default class componentName extends Component {
     constructor(props) {
@@ -18,10 +18,10 @@ export default class componentName extends Component {
 
     }
     Get_levels = async (id) => {
-        localStorage.getItem("Levels", JSON.stringify(levels));
-        var courseId = JSON.parse(localStorage.getItem("courseId"));
-        //let courseId = await AsyncStorage.getItem('courseId')
-        //let courseIDD = this.props?.courseId
+        // localStorage.getItem("Levels", JSON.stringify(levels));
+        // var courseId = JSON.parse(localStorage.getItem("courseId"));
+        let courseId = await AsyncStorage.getItem('courseId')
+        let courseIDD = this.props?.courseId
         //let userid = 1
         let response = await fetch(
             'https://crossword-app-backend.herokuapp.com/app/levels/' + this.props?.courseId + '/',
@@ -35,13 +35,13 @@ export default class componentName extends Component {
             .then(response => response.json())
             .then(responseJson => {
                 console.log('Responce==========ifj', responseJson)
-                return
+                // return
                 this.setState({
-                    levels: responseJson.levels
+                    levels: responseJson.courses
                 })
-                console.log("id==========", this.state.levels)
+                console.log("levelid==========", this.state.levels)
 
-                //return responseJson;
+                return responseJson;
             })
             .catch(error => {
                 console.error(error);
@@ -73,7 +73,7 @@ export default class componentName extends Component {
 
                 <View style={styles.mainimageviewsty}>
                     <TouchableOpacity
-                        onPress={() => Actions.crossword1()}
+                        onPress={() => Actions.crossword1({ courseId: this.props?.courseId })}
                         style={styles.image1viewsty}>
                         <Image
                             source={require("../Demo/Pic/level1.png")}

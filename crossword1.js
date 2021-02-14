@@ -10,7 +10,7 @@ export default class componentName extends Component {
                 <View style={styles.view1sty}>
                     <View style={styles.view2sty}>
                         <TouchableOpacity
-                            onPress={() => Actions.Levels()}>
+                            onPress={() => Actions.Levels({ courseId: this.props?.courseId })}>
                             <Icon style={styles.lefticonsty} type='Entypo' name='chevron-thin-left' />
                         </TouchableOpacity>
 

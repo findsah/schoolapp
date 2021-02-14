@@ -3,6 +3,70 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 export default class componentName extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            qmcq: []
+        }
+    }
+    // mcqs = async () => {
+
+    //     await fetch('https://crossword-app-backend.herokuapp.com/app/question/42/4/', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //         },
+    //         body: formdata
+    //     }).then((response) => response.json())
+    //     console.log(response)
+    //         .then((data) => {
+    //             console.log('Data', data)
+    //             const token = data.token;
+    //             console.log('ID==========', data.user_id)
+    //             return
+    //             AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
+    //             this.setState({
+    //                 userdata: data,
+    //                 loader: false
+    //             })
+    //             Actions.Dashbord()
+    //             return
+    //             if (responsejosn.status) {
+    //                 this.setState({ stsAuthToken: responsejosn.token })
+    //                 AsyncStorage.setItem('authToken', JSON.stringify(token))
+    //                 Actions.Dashbord()
+    //                 console.log(responsejosn.token)
+    //                 console.log('response send', responsejosn)
+    //             }
+    //             else {
+    //                 alert(responsejosn.message)
+    //             }
+    //             if (responsejosn) {
+    //                 this.setState({ stsAuthToken: responsejosn.success.token })
+    //                 AsyncStorage.setItem('authToken', JSON.stringify(token))
+    //                 console.log(responsejosn.token)
+    //             }
+    //             else {
+    //                 Alert.alert(
+    //                     "Please enter the valid Id & Password ")
+    //             }
+    //             console.log(responsejosn)
+
+    //         })
+    //     console.log('Login Entered email and password', this.state.stcivilid, ' ', this.state.stPassword, this.state.stname, ' ', this.state.stclass, ' ')
+
+    // }
+
+
+
+
+
+
+
+
+
+
+
     render() {
         return (
             <ScrollView>
