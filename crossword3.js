@@ -2,157 +2,173 @@ import { View, Icon, Input } from 'native-base';
 import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+const baseUrl = 'https://crossword-app-backend.herokuapp.com'
+
+
 export default class componentName extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            qmcq: []
+            qmcq: [],
+            qText: '',
+            image: '',
+            option1: '',
+            option2: '',
+            option3: '',
+            option4: '',
+            save: '',
+            count: 1,
         }
+        this.mcqs(this.state.count)
     }
-    // mcqs = async () => {
 
-    //     await fetch('https://crossword-app-backend.herokuapp.com/app/question/42/4/', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //         },
-    //         body: formdata
-    //     }).then((response) => response.json())
-    //     console.log(response)
-    //         .then((data) => {
-    //             console.log('Data', data)
-    //             const token = data.token;
-    //             console.log('ID==========', data.user_id)
-    //             return
-    //             AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
-    //             this.setState({
-    //                 userdata: data,
-    //                 loader: false
-    //             })
-    //             Actions.Dashbord()
-    //             return
-    //             if (responsejosn.status) {
-    //                 this.setState({ stsAuthToken: responsejosn.token })
-    //                 AsyncStorage.setItem('authToken', JSON.stringify(token))
-    //                 Actions.Dashbord()
-    //                 console.log(responsejosn.token)
-    //                 console.log('response send', responsejosn)
-    //             }
-    //             else {
-    //                 alert(responsejosn.message)
-    //             }
-    //             if (responsejosn) {
-    //                 this.setState({ stsAuthToken: responsejosn.success.token })
-    //                 AsyncStorage.setItem('authToken', JSON.stringify(token))
-    //                 console.log(responsejosn.token)
-    //             }
-    //             else {
-    //                 Alert.alert(
-    //                     "Please enter the valid Id & Password ")
-    //             }
-    //             console.log(responsejosn)
+    mcqs = async (q) => {
+        console.log('calledd', q)
 
-    //         })
-    //     console.log('Login Entered email and password', this.state.stcivilid, ' ', this.state.stPassword, this.state.stname, ' ', this.state.stclass, ' ')
+        await this.setState({
+            count: q
+        })
+        console.log('count', this.state.count);
 
-    // }
+        if (this.props.from) {
+            await AsyncStorage.setItem('levelId', JSON.stringify(this.props?.levelId))
+        }
 
+        let levelId = await AsyncStorage.getItem('levelId')
+        if (this.state.count < 5) {
 
+            await fetch('https://crossword-app-backend.herokuapp.com/app/question/42/' + this.state.count + '/', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                },
+            }).then((response) => response.json())
+                .then((data) => {
+                    console.log('Data---->', data?.qmcq[0])
 
+                    this.setState({
+                        image: data?.question_picture,
+                        qText: data?.question_text,
+                        qmcq: data?.qmcq,
+                        option1: data?.qmcq[0].choice_word,
+                        option2: data?.qmcq[1].choice_word,
+                        option3: data?.qmcq[2].choice_word,
+                        option4: data?.qmcq[3].choice_word,
+                    })
+                })
 
+        }
+        else {
+            alert('No more questions')
+            
+        }
 
-
-
-
-
-
+    }
+    saveans = async (ans) => {
+        await this.setState({
+            save: ans
+        })
+        //console.log('value', this.state.save)
+    }
 
     render() {
+        // console.log('image', baseUrl + this.state.image)
         return (
-            <ScrollView>
-                <View style={styles.container}>
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <TouchableOpacity
-                                onPress={() => Actions.Levels()}>
-                                <Icon style={styles.lefticonsty} type='Entypo' name='chevron-thin-left' />
-                            </TouchableOpacity>
+            <ScrollView style={styles.container} contentContainerStyle={{ alignItems: 'center' }} >
+                <View style={styles.view1sty}>
+                    <View style={styles.view2sty}>
+                        <TouchableOpacity
+                            onPress={() => Actions.Levels()}>
+                            <Icon style={styles.lefticonsty} type='Entypo' name='chevron-thin-left' />
+                        </TouchableOpacity>
 
-                        </View>
+                    </View>
 
-                        <View style={styles.view3sty}>
-                            <Text style={styles.text1sty}>السوال</Text>
-                        </View>
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                1
+                    <View style={styles.view3sty}>
+                        <Text style={styles.text1sty}>السوال</Text>
+                    </View>
+                    <View style={styles.view4sty}>
+                        <Text style={styles.text2sty}>
+                            1
                             </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star' />
-                        </View>
+                        <Icon style={styles.stariconsty} type='Entypo' name='star' />
                     </View>
-
-                    <Image
-                        source={require('./Pic/crossword3image.png')}
-                        style={styles.imagesty}
-
-                    />
-
-                    <View style={styles.inputview}>
-                        <Input placeholder='نص السوال' placeholderTextColor='#FFFFFF'
-                            style={{ fontSize: 35 }}
-                        />
-                    </View>
-
-                    <View style={{
-                        flexDirection: 'row',
-                        // backgroundColor: 'green',
-                        width: '80%',
-                        height: 70,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginTop: '10%'
-                    }}>
-                        <View style={styles.inputrowview}>
-                            <Input placeholder='خيارـ١ ' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 25 }}
-                            />
-                        </View>
-                        <View style={styles.inputrowview}>
-                            <Input placeholder='خيارـ٢ ' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 25 }}
-                            />
-                        </View>
-                    </View>
-
-
-
-                    <View style={{
-                        flexDirection: 'row',
-                        // backgroundColor: 'green',
-                        width: '80%',
-                        height: 70,
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginTop: '10%',
-                        marginBottom: '10%'
-                    }}>
-                        <View style={styles.inputrowview}>
-                            <Input placeholder='خيارـ٣ ' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 25 }}
-                            />
-                        </View>
-                        <View style={styles.inputrowview}>
-                            <Input placeholder='خيارـ٣ ' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 25 }}
-                            />
-                        </View>
-                    </View>
-
-
-
-
-
                 </View>
+
+                <Image
+                    source={{ uri: baseUrl + this.state.image }}
+                    style={styles.imagesty}
+
+                />
+
+                <View style={styles.inputview}>
+                    {/* <Input placeholder='نص السوال' placeholderTextColor='#FFFFFF'
+                        style={{ fontSize: 35 }}
+                    /> */}
+                    <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.qText}</Text>
+                </View>
+
+                <View style={{
+                    flexDirection: 'row',
+                    // backgroundColor: 'green',
+                    width: '80%',
+                    height: 70,
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginTop: '10%'
+                }}>
+                    <TouchableOpacity
+                        onPress={() => this.saveans(this.state.option1)}
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.option1}</Text>
+
+
+                        {/* <Input placeholder='خيارـ١ ' placeholderTextColor='#FFFFFF'
+                            style={{ fontSize: 25 }}
+                        /> */}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.saveans(this.state.option2)}
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.option2}</Text>
+
+                        {/* <Input placeholder='خيارـ٢ ' placeholderTextColor='#FFFFFF'
+                            style={{ fontSize: 25 }}
+                        /> */}
+                    </TouchableOpacity>
+                </View>
+
+
+
+                <View style={{
+                    flexDirection: 'row',
+                    // backgroundColor: 'green',
+                    width: '80%',
+                    height: 70,
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginTop: '10%',
+                    marginBottom: '10%'
+                }}>
+                    <TouchableOpacity
+                        onPress={() => this.saveans(this.state.option3)}
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.option3}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => this.saveans(this.state.option4)}
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.option4}</Text>
+
+                    </TouchableOpacity>
+                </View>
+
+                <TouchableOpacity
+                    onPress={() => this.mcqs(this.state.count + 1)}
+                    style={{ width: 100, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
+                    <Text>Next Question</Text>
+                </TouchableOpacity>
             </ScrollView>
 
         );
@@ -163,7 +179,7 @@ let styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#AED0EE',
-        alignItems: 'center'
+        //  alignItems: 'center'
     },
 
 
@@ -222,6 +238,8 @@ let styles = StyleSheet.create({
     },
     imagesty: {
         marginTop: '5%',
+        width: 150,
+        height: 150,
     },
     inputview: {
         height: 70,

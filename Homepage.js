@@ -16,10 +16,10 @@ export default class Register extends Component {
                 <View style={styles.container}>
                     <Image
                         style={styles.image1sty}
-                        source={require("../Demo/Pic/homepageimage.png")}
+                        source={require("./Pic/homepageimage.png")}
                     />
                     <ImageBackground style={styles.imagesty}
-                        source={require("../Demo/Pic/Background.png")}>
+                        source={require("./Pic/Background.png")}>
 
                     </ImageBackground>
                     <View style={styles.view1sty}>

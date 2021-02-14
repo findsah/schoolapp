@@ -3,6 +3,10 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
+import level1Image from './Pic/level1.png'
+import level2Image from './Pic/level2.png'
+import level3Image from './Pic/level3.png'
+import level4Image from './Pic/level4.png'
 //import localStorage from '@react-native-community/local-storage';
 
 export default class componentName extends Component {
@@ -14,17 +18,23 @@ export default class componentName extends Component {
     }
     componentDidMount = async () => {
         this.Get_levels()
-        console.log("courseid==============", this.props?.courseId)
+        // console.log("courseid==============", this.props?.courseId)
 
     }
     Get_levels = async (id) => {
         // localStorage.getItem("Levels", JSON.stringify(levels));
         // var courseId = JSON.parse(localStorage.getItem("courseId"));
+        if (this.props.from) {
+            await AsyncStorage.setItem('courseId', JSON.stringify(this.props?.courseId))
+        }
+
         let courseId = await AsyncStorage.getItem('courseId')
-        let courseIDD = this.props?.courseId
+        // console.log('couse id ',courseId);
+        // let courseId = await AsyncStorage.getItem('courseId')
+        // let courseIDD = this.props?.courseId
         //let userid = 1
         let response = await fetch(
-            'https://crossword-app-backend.herokuapp.com/app/levels/' + this.props?.courseId + '/',
+            'https://crossword-app-backend.herokuapp.com/app/levels/' + courseId + '/',
             {
                 method: 'GET',
                 headers: {
@@ -34,12 +44,42 @@ export default class componentName extends Component {
         )
             .then(response => response.json())
             .then(responseJson => {
-                console.log('Responce==========ifj', responseJson)
-                // return
+
+                for (let index = 0; index < responseJson.courses.length; index++) {
+                    // const element = array[index];
+                    //  console.log('loop', index)
+                    let temp = responseJson.courses
+                    if (index == 0) {
+                        temp[index].image = level1Image
+                        this.setState({
+                            levels: temp
+                        })
+                    }
+                    else if (index == 1) {
+                        temp[index].image = level2Image
+                        this.setState({
+                            levels: temp
+                        })
+                    }
+                    else if (index == 2) {
+                        temp[index].image = level3Image
+                        this.setState({
+                            levels: temp
+                        })
+                    }
+                    else if (index == 3) {
+                        temp[index].image = level4Image
+                        this.setState({
+                            levels: temp
+                        })
+                    }
+                    //   console.log('levels',this.state.levels)
+
+                }
                 this.setState({
                     levels: responseJson.courses
                 })
-                console.log("levelid==========", this.state.levels)
+                //  console.log("levelid==========", this.state.levels)
 
                 return responseJson;
             })
@@ -71,12 +111,30 @@ export default class componentName extends Component {
                     </View>
                 </View>
 
-                <View style={styles.mainimageviewsty}>
+                <View style={{ flexWrap: 'wrap', flexDirection: 'row', width: '80%', marginTop: 20 }}>
+
+                    {this.state.levels.map((data, index) => {
+                        //    console.log('data in mpa',data);
+                        return (
+                            <TouchableOpacity key={index}
+                                onPress={() => Actions.crossword3({ levelId: data?.id  , from:true})}
+                                style={styles.image1viewsty}>
+                                <Image
+                                    source={data?.image}
+                                //resizeMode='cover'
+                                />
+                            </TouchableOpacity>
+                        )
+                    })}
+
+                </View>
+
+                {/* <View style={styles.mainimageviewsty}>
                     <TouchableOpacity
                         onPress={() => Actions.crossword1({ courseId: this.props?.courseId })}
                         style={styles.image1viewsty}>
                         <Image
-                            source={require("../Demo/Pic/level1.png")}
+                            source={require("./Pic/level1.png")}
                         //resizeMode='cover'
                         />
                     </TouchableOpacity>
@@ -85,7 +143,7 @@ export default class componentName extends Component {
                             onPress={() => Actions.crossword3()}
                         >
                             <Image
-                                source={require("../Demo/Pic/level2.png")}
+                                source={require("./Pic/level2.png")}
                                 blurRadius={1}
                             />
                         </TouchableOpacity>
@@ -95,7 +153,7 @@ export default class componentName extends Component {
                         onPress={() => Actions.crossword4()}
                         style={styles.image1viewsty}>
                         <Image
-                            source={require("../Demo/Pic/level3.png")}
+                            source={require("./Pic/level3.png")}
                             blurRadius={1}
                         />
                     </TouchableOpacity>
@@ -104,44 +162,47 @@ export default class componentName extends Component {
                 <View style={styles.mainimage2viewsty}>
                     <View style={styles.image1viewsty}>
                         <Image
-                            source={require("../Demo/Pic/level4.png")}
+                            source={require("./Pic/level4.png")}
                             blurRadius={1}
                         />
-                    </View>
-                    <View style={styles.image1viewsty}>
-                        <Image
-                            source={require("../Demo/Pic/level5.png")}
-                            blurRadius={1}
-                        />
-                    </View>
-                    <View style={styles.image1viewsty}>
-                        <Image
-                            source={require("../Demo/Pic/level6.png")}
-                            blurRadius={1}
-                        />
-                    </View>
-                </View>
+                    </View> */}
 
-                <View style={styles.mainimage2viewsty}>
-                    <View style={styles.image1viewsty}>
+                {/* <View style={styles.image1viewsty}>
                         <Image
-                            source={require("../Demo/Pic/level7.png")}
+                            source={require("./Pic/level5.png")}
                             blurRadius={1}
                         />
                     </View>
                     <View style={styles.image1viewsty}>
                         <Image
-                            source={require("../Demo/Pic/level8.png")}
+                            source={require("./Pic/level6.png")}
+                            blurRadius={1}
+                        />
+                    </View> */}
+                {/* </View> */}
+
+                {/* <View style={styles.mainimage2viewsty}>
+                    <View style={styles.image1viewsty}>
+                        <Image
+                            source={require("./Pic/level7.png")}
                             blurRadius={1}
                         />
                     </View>
                     <View style={styles.image1viewsty}>
                         <Image
-                            source={require("../Demo/Pic/level9.png")}
+                            source={require("./Pic/level8.png")}
+                            blurRadius={1}
+                        />
+                    </View>
+                    <View style={styles.image1viewsty}>
+                        <Image
+                            source={require("./Pic/level9.png")}
                             blurRadius={1}
                         />
                     </View>
                 </View>
+           
+            */}
             </View>
         );
     }

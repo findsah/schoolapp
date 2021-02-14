@@ -65,7 +65,7 @@ export default class componentName extends Component {
 
                 <TouchableOpacity
                     style={styles.view3sty}
-                    onPress={() => Actions.Levels({ courseId: data?.item?.id })}
+                    onPress={() => Actions.Levels({ courseId: data?.item?.id , from:true })}
                 //</View>onPress={() => Actions.Levels(data?.item?.id)}
                 >
                     <Text style={styles.text1sty}>{data?.item?.name}</Text>
@@ -90,7 +90,7 @@ export default class componentName extends Component {
                     <Icon style={{ color: '#000002', fontSize: 55 }} type='Entypo' name='menu' />
                 </View>
                 <Image
-                    source={require("../Demo/Pic/courseimage.png")}
+                    source={require("./Pic/courseimage.png")}
                 />
                 <FlatList
                     data={this.state.courses}

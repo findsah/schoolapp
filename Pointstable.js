@@ -14,7 +14,7 @@ export default class componentName extends Component {
                     </View>
 
                     <Image
-                        source={require("../Demo/Pic/Tablepointimage.png")}
+                        source={require("./Pic/Tablepointimage.png")}
                     />
                     <Text style={styles.textsty}>
                         اهلابك

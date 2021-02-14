@@ -111,7 +111,7 @@ export default class Register extends Component {
         return (
             <ScrollView contentContainerStyle={{ alignItems: 'center', padding: 5 }} style={styles.container}>
                 <ImageBackground style={styles.imagesty}
-                    source={require("../Demo/Pic/Background.png")}>
+                    source={require("./Pic/Background.png")}>
 
                 </ImageBackground>
                 <View style={styles.view1sty}>

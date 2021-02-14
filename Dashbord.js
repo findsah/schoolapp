@@ -29,7 +29,7 @@ export default class componentName extends Component {
                     </View>
 
                     <Image
-                        source={require("../Demo/Pic/Dashbordimage.png")}
+                        source={require("./Pic/Dashbordimage.png")}
                     />
 
 
@@ -60,7 +60,7 @@ export default class componentName extends Component {
                     <View style={styles.imagesty}>
                         <Image
 
-                            source={require("../Demo/Pic/Dashbordimage2.png")}
+                            source={require("./Pic/Dashbordimage2.png")}
                             style={{ width: 300, height: 200 }}
 
                         />

@@ -111,7 +111,7 @@ export default class Register extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <ImageBackground style={styles.imagesty}
-                        source={require("../Demo/Pic/Background.png")}>
+                        source={require("./Pic/Background.png")}>
 
                     </ImageBackground>
                     <View style={styles.view1sty}>

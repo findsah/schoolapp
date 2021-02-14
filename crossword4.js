@@ -31,7 +31,7 @@ export default class componentName extends Component {
 
                     <View style={styles.container}>
                         <Image
-                            source={require("../Demo/Pic/crossword3image.png")}
+                            source={require("./Pic/crossword3image.png")}
                             style={{ marginTop: '25%', width: '36%', height: '22%' }}
                         />
                         <View style={styles.maincardviewsty}>

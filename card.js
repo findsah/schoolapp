@@ -13,7 +13,7 @@ export default class componentName extends Component {
                     </View>
 
                     <Image
-                        source={require("../Demo/Pic/level8.png")}
+                        source={require("./Pic/level8.png")}
                         style={{ marginTop: '5%' }}
                     />
 
