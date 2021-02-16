@@ -3,8 +3,61 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 const HEIGHT = Dimensions.get('screen').height / 3;
+const baseUrl = 'https://crossword-app-backend.herokuapp.com'
+
 
 export default class componentName extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cmcq: [],
+            image: '',
+            choiceword1: '',
+            choiceword2: '',
+            choiceword3: '',
+            choiceword4: '',
+            choiceword5: '',
+            choiceword6: '',
+            choiceword7: '',
+            choiceword8: '',
+            choiceword9: '',
+            choiceword10: '',
+            count: 1,
+        }
+        this.qmcq()
+    }
+
+    qmcq = async () => {
+
+        await fetch('https://crossword-app-backend.herokuapp.com/app/cquestion/1/3-Across/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+
+                //console.log('Data---->', data?.cmcq)
+
+                this.setState({
+                    image: data?.question_pic,
+                    cmcq: data?.cmcq,
+                    choiceword1: data?.cmcq[0].choice_word,
+                    choiceword2: data?.cmcq[1].choice_word,
+                    choiceword3: data?.cmcq[2].choice_word,
+                    choiceword4: data?.cmcq[3].choice_word,
+                    choiceword5: data?.cmcq[4].choice_word,
+                    choiceword6: data?.cmcq[5].choice_word,
+                    choiceword7: data?.cmcq[6].choice_word,
+                    choiceword8: data?.cmcq[7].choice_word,
+                    choiceword9: data?.cmcq[8].choice_word,
+                    choiceword10: data?.cmcq[9].choice_word,
+                })
+                //console.log("image===============++>", this.state.cmcq)
+            })
+    }
+
     render() {
         return (
             <ScrollView>
@@ -32,31 +85,18 @@ export default class componentName extends Component {
                     <View style={styles.container}>
                         <Image
                             source={require("./Pic/crossword3image.png")}
-                            style={{ marginTop: '25%', width: '36%', height: '22%' }}
+                            style={{ marginTop: '30%', width: 170, height: 180 }}
                         />
                         <View style={styles.maincardviewsty}>
                             <View style={styles.headerviewsty}>
                                 <Text style={styles.text1sty}>أكمل...</Text>
                             </View>
 
+                            <Image
+                                source={{ uri: baseUrl + this.state.image }}
+                                style={styles.imagesty}
+                            />
 
-
-
-
-
-
-                            <View style={styles.cardtextviewsty}>
-                                <View style={{ width: '25%' }}>
-                                    <Text style={styles.text1sty}>
-                                        ____
-                            </Text>
-                                </View>
-                                <View style={{ width: '84%', justifyContent: 'center' }}>
-                                    <Text style={styles.text1sty}>
-                                        أطلب العلم ولوفي
-                            </Text>
-                                </View>
-                            </View>
                             <TouchableOpacity style={styles.cardfooterviewsty}>
                                 <Text style={styles.text1sty}>
                                     إحذف حرف
@@ -90,46 +130,42 @@ export default class componentName extends Component {
                         <View style={{ height: '40%' }}>
 
                             <View style={styles.textbox1viewsty}>
-                                <View style={styles.input1view}>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword1}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword2}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword3}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword4}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword5}</Text>
+                                </TouchableOpacity>
 
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
                             </View>
 
 
                             <View style={[styles.textbox1viewsty]}>
-                                <View style={styles.input1view}>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword6}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword7}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword8}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword9}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.input1view}>
+                                    <Text style={styles.chosewordsty}>{this.state.choiceword10}</Text>
+                                </TouchableOpacity>
 
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
-                                <View style={styles.input1view}>
-
-                                </View>
 
                             </View>
 
@@ -147,6 +183,7 @@ let styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#AED0EE',
+        //backgroundColor: 'red',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -214,7 +251,6 @@ let styles = StyleSheet.create({
     maincardviewsty: {
         backgroundColor: '#114E76',
         width: '80%',
-
         height: 380,
         borderRadius: 15,
         alignItems: 'center',
@@ -256,21 +292,29 @@ let styles = StyleSheet.create({
     textbox1viewsty: {
 
         flexDirection: 'row',
-        width: '98%',
+        width: '70%',
         padding: 10,
+        alignItems: 'center',
+        // backgroundColor: 'red',
         justifyContent: 'space-between',
-
     },
     input1view: {
         flexDirection: 'row',
         height: 49,
-        width: '15%',
+        width: '19%',
         borderWidth: .6,
         borderRadius: 8,
         borderColor: '#707070',
         backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-
     },
+    imagesty: {
+        marginTop: '15%',
+        width: 150,
+        height: 150,
+    },
+    chosewordsty: {
+        fontSize: 30,
+    }
 });

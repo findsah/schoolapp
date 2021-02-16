@@ -24,12 +24,14 @@ export default class componentName extends Component {
     }
 
     mcqs = async (q) => {
-        console.log('calledd', q)
+
+        //console.log('calledd', q)
 
         await this.setState({
             count: q
         })
-        console.log('count', this.state.count);
+
+        //  console.log('count', this.state.count);
 
         if (this.props.from) {
             await AsyncStorage.setItem('levelId', JSON.stringify(this.props?.levelId))
@@ -45,7 +47,8 @@ export default class componentName extends Component {
                 },
             }).then((response) => response.json())
                 .then((data) => {
-                    console.log('Data---->', data?.qmcq[0])
+
+                    //console.log('Data---->', data?.qmcq[0])
 
                     this.setState({
                         image: data?.question_picture,
@@ -60,8 +63,8 @@ export default class componentName extends Component {
 
         }
         else {
-            alert('No more questions')
-            
+            Actions.crossword1()
+
         }
 
     }
@@ -70,6 +73,27 @@ export default class componentName extends Component {
             save: ans
         })
         //console.log('value', this.state.save)
+    }
+    checkAnswer = async () => {
+        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/2/42/1/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+        }).then((response) => response.json())
+            .then((data) => {
+
+                console.log('Data---->', data)
+                //return
+                if (this.state.save == data.answer) {
+                    alert("answer is correct")
+                    this.mcqs(this.state.count + 1)
+                }
+                else {
+                    alert(data.detail)
+                    this.mcqs(this.state.count + 1)
+                }
+            })
     }
 
     render() {
@@ -99,19 +123,13 @@ export default class componentName extends Component {
                 <Image
                     source={{ uri: baseUrl + this.state.image }}
                     style={styles.imagesty}
-
                 />
-
                 <View style={styles.inputview}>
-                    {/* <Input placeholder='نص السوال' placeholderTextColor='#FFFFFF'
-                        style={{ fontSize: 35 }}
-                    /> */}
                     <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.qText}</Text>
                 </View>
 
                 <View style={{
                     flexDirection: 'row',
-                    // backgroundColor: 'green',
                     width: '80%',
                     height: 70,
                     alignItems: 'center',
@@ -122,24 +140,13 @@ export default class componentName extends Component {
                         onPress={() => this.saveans(this.state.option1)}
                         style={styles.inputrowview}>
                         <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.option1}</Text>
-
-
-                        {/* <Input placeholder='خيارـ١ ' placeholderTextColor='#FFFFFF'
-                            style={{ fontSize: 25 }}
-                        /> */}
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => this.saveans(this.state.option2)}
                         style={styles.inputrowview}>
                         <Text style={{ fontSize: 18, color: '#fff' }}>{this.state.option2}</Text>
-
-                        {/* <Input placeholder='خيارـ٢ ' placeholderTextColor='#FFFFFF'
-                            style={{ fontSize: 25 }}
-                        /> */}
                     </TouchableOpacity>
                 </View>
-
-
 
                 <View style={{
                     flexDirection: 'row',
@@ -165,12 +172,12 @@ export default class componentName extends Component {
                 </View>
 
                 <TouchableOpacity
-                    onPress={() => this.mcqs(this.state.count + 1)}
+                    //onPress={() => this.mcqs(this.state.count + 1)}
+                    onPress={() => this.checkAnswer()}
                     style={{ width: 100, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
                     <Text>Next Question</Text>
                 </TouchableOpacity>
             </ScrollView>
-
         );
     }
 }
@@ -179,24 +186,16 @@ let styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#AED0EE',
-        //  alignItems: 'center'
     },
-
-
-
     stariconsty: {
         color: '#FFD800',
         fontSize: 35,
         marginBottom: '5%'
     },
-
-
-
     view1sty: {
         flexDirection: 'row',
         width: '100%',
         height: 75,
-
     },
     view2sty: {
         flexDirection: 'row',
@@ -262,7 +261,6 @@ let styles = StyleSheet.create({
         backgroundColor: '#59A9C2',
         justifyContent: 'center',
         alignItems: 'center',
-        //marginTop: '10%',
         alignSelf: 'center'
     },
 });

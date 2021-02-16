@@ -2,7 +2,38 @@ import { View, Icon, Input } from 'native-base';
 import React, { Component } from 'react';
 import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+const baseUrl = 'https://crossword-app-backend.herokuapp.com'
 export default class componentName extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            crosswordpic: '',
+            id: '',
+            save: '',
+            Image: '',
+            count: 1,
+        }
+        this.crossword()
+    }
+
+    crossword = async () => {
+        //console.log('Data==================',)
+        await fetch('https://crossword-app-backend.herokuapp.com/app/crossword/42/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                //console.log('Data----+++++++++++++', data)
+                this.setState({
+                    image: data?.crossword_picture,
+                })
+            })
+    }
+
     render() {
         return (
 
@@ -13,9 +44,7 @@ export default class componentName extends Component {
                             onPress={() => Actions.Levels({ courseId: this.props?.courseId })}>
                             <Icon style={styles.lefticonsty} type='Entypo' name='chevron-thin-left' />
                         </TouchableOpacity>
-
                     </View>
-
                     <View style={styles.view3sty}>
                         <Text style={styles.text1sty}>الكلمات المتقاطعة</Text>
                     </View>
@@ -26,141 +55,53 @@ export default class componentName extends Component {
                         <Icon style={styles.stariconsty} type='Entypo' name='star' />
                     </View>
                 </View>
-
-
-
-                <View style={styles.quizmainviewsty}>
-                    <View style={{ marginLeft: '63%' }}>
-                        <View style={styles.input1view}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                    </View>
-
-
-
-
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: '1%' }}>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.inputview}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                    </View>
-
-
-
-                    <View style={{ marginLeft: '63%' }}>
-                        <View style={styles.input1view}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                    </View>
-
-
-
-                    <View style={{
-                        flexDirection: 'row',
-                        width: '35%',
-                        justifyContent: 'space-between',
-                        //backgroundColor: 'green',
-                        marginLeft: '52%'
-                    }}>
-                        <View style={styles.input2view}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.input2view}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                    </View>
-                    <View style={{
-                        flexDirection: 'row',
-                        width: '35%',
-                        justifyContent: 'space-between',
-                        //backgroundColor: 'green',
-                        marginLeft: '52%'
-                    }}>
-                        <View style={styles.input2view}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                        <View style={styles.input2view}>
-                            <Input placeholder='' placeholderTextColor='#FFFFFF'
-                                style={{ fontSize: 20 }}
-                            />
-                        </View>
-                    </View>
+                <View>
+                    <Image
+                        source={{ uri: baseUrl + this.state.image }}
+                        style={styles.imagesty}
+                    />
+                </View>
+                <View style={styles.buttonviewsty}>
+                    <TouchableOpacity
+                        onPress={() => Actions.crossword4()}
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>Down-1</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        //onPress={() => this.saveans(this.state.option2)}
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>Down-2</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.buttonviewsty}>
+                    <TouchableOpacity
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>Across-3</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.inputrowview}>
+                        <Text style={{ fontSize: 18, color: '#fff' }}>Across-4</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-
         );
     }
 }
 let styles = StyleSheet.create({
-
     container: {
         flex: 1,
         backgroundColor: '#AED0EE',
         alignItems: 'center'
     },
-
-
-
     stariconsty: {
         color: '#FFD800',
         fontSize: 35,
         marginBottom: '5%'
     },
-
-
-
     view1sty: {
         flexDirection: 'row',
         width: '100%',
         height: 75,
-
     },
     view2sty: {
         flexDirection: 'row',
@@ -200,63 +141,28 @@ let styles = StyleSheet.create({
         fontSize: 25,
         color: 'white'
     },
-    inputview: {
-        flexDirection: 'row',
-        height: 45,
-        width: '11%',
-        borderWidth: .6,
-        borderRadius: 8,
-        borderColor: '#707070',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        //marginTop: '3%',
-        alignSelf: 'center'
+    imagesty: {
+        marginTop: '5%',
+        width: 300,
+        height: 300,
     },
-    input1view: {
-        flexDirection: 'row',
-        height: 45,
+    inputrowview: {
+        height: 70,
         width: '30%',
         borderWidth: .6,
-        borderRadius: 8,
+        borderRadius: 10,
         borderColor: '#707070',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#114E76',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: '3%',
         alignSelf: 'center'
     },
-    input2view: {
+    buttonviewsty: {
         flexDirection: 'row',
-        height: 45,
-        width: '33%',
-        borderWidth: .6,
-        borderRadius: 8,
-        borderColor: '#707070',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
+        width: '72%',
+        height: 70,
         alignItems: 'center',
-        marginTop: '3%',
-        alignSelf: 'center'
-    },
-    input3view: {
-        flexDirection: 'row',
-        height: 45,
-        width: '22%',
-        borderWidth: .6,
-        borderRadius: 8,
-        borderColor: '#707070',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        //marginTop: '3%',
-        alignSelf: 'center'
-    },
-
-    quizmainviewsty: {
-        marginTop: '10%',
-        width: '90%',
-        height: '70%',
-        backgroundColor: 'red'
-    },
+        justifyContent: 'space-between',
+        marginTop: '10%'
+    }
 });
