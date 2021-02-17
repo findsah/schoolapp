@@ -23,13 +23,38 @@ export default class componentName extends Component {
             choiceword9: '',
             choiceword10: '',
             count: 1,
+            fill1: '',
+            fill2: '',
+            fill3: '',
+            fill4: '',
+            fill5: '',
+            count: 1,
+            order: 1,
+            fillWords: [],
         }
         this.qmcq()
     }
-
+    fillword1 = (ans) => {
+        this.setState({
+            fill1: ans,
+            fill2: ans,
+            fill3: ans,
+            fill4: ans,
+            fill5: ans,
+            // next: count + 1,
+        })
+        let wordArray = this.state.fillWords
+        wordArray.push(ans);
+        this.setState({
+            fillWords: wordArray
+        })
+        console.log("Array++++++++++", this.state.fillWords)
+        //console.log("String++++++++++", toString())
+    }
     qmcq = async () => {
-
-        await fetch('https://crossword-app-backend.herokuapp.com/app/cquestion/1/3-Across/', {
+        //console.log('pram+++', this.props?.param)
+        //return
+        await fetch('https://crossword-app-backend.herokuapp.com/app/cquestion/1/' + this.props?.param + '/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -55,6 +80,38 @@ export default class componentName extends Component {
                     choiceword10: data?.cmcq[9].choice_word,
                 })
                 //console.log("image===============++>", this.state.cmcq)
+            })
+    }
+    checkAnswer = async () => {
+        let formdata = new FormData()
+        formdata.append('answer', this.state.save)
+        console.log('formdat', formdata)
+        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/2/42/' + this.state.order + '/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+            body: formdata
+        }).then((response) => response.json())
+            .then((data) => {
+                //console.log('Data---->', data)
+                //console.log('Data---->++++++1111', this.state.save, '==', data.answer)
+                if (data.detail == 'Mash Allah') {
+                    this.setState({
+                        order: this.state.order + 1
+                    })
+                    //  console.log("Answer==========", data)
+                    alert(data.detail)
+                    this.mcqs(this.state.count + 1)
+                }
+                else {
+                    //console.log("idhnk==========", data.answer)
+                    this.setState({
+                        order: this.state.order + 1
+                    })
+                    alert(data.detail)
+                    this.mcqs(this.state.count + 1)
+                }
             })
     }
 
@@ -110,39 +167,50 @@ export default class componentName extends Component {
 
                         <View style={styles.textboxviewsty}>
                             <View style={styles.inputview}>
-
+                                <Text style={styles.chosewordsty}>{this.state.fillWords[0]}</Text>
                             </View>
                             <View style={styles.inputview}>
-
+                                <Text style={styles.chosewordsty}>{this.state.fillWords[1]}</Text>
                             </View>
                             <View style={styles.inputview}>
-
+                                <Text style={styles.chosewordsty}>{this.state.fillWords[2]}</Text>
                             </View>
                             <View style={styles.inputview}>
-                                <Text style={styles.text1sty}>ح</Text>
+                                <Text style={styles.chosewordsty}>{this.state.fillWords[3]}</Text>
                             </View>
                             <View style={styles.inputview}>
-
+                                <Text style={styles.chosewordsty}>{this.state.fillWords[4]}</Text>
                             </View>
                         </View>
 
 
-                        <View style={{ height: '40%' }}>
+                        <View style={{ height: '40%', alignItems: 'center' }}>
 
                             <View style={styles.textbox1viewsty}>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    //this.mcqs(this.state.count + 1)
+                                    onPress={() => this.fillword1(this.state.choiceword1)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword1}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword2)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword2}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword3)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword3}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword4)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword4}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword5)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword5}</Text>
                                 </TouchableOpacity>
 
@@ -150,27 +218,39 @@ export default class componentName extends Component {
 
 
                             <View style={[styles.textbox1viewsty]}>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword6)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword6}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword7)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword7}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword8)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword8}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword9)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword9}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.input1view}>
+                                <TouchableOpacity
+                                    onPress={() => this.fillword1(this.state.choiceword10)}
+                                    style={styles.input1view}>
                                     <Text style={styles.chosewordsty}>{this.state.choiceword10}</Text>
                                 </TouchableOpacity>
-
-
                             </View>
-
+                            <TouchableOpacity
+                                //onPress={() => this.mcqs(this.state.count + 1)}
+                                onPress={() => this.checkAnswer()}
+                                style={{ width: 100, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
+                                <Text>Next Question</Text>
+                            </TouchableOpacity>
                         </View>
-
                     </View>
                 </View>
             </ScrollView>

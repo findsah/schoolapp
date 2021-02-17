@@ -4,8 +4,6 @@ import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-nat
 import { Actions } from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 const baseUrl = 'https://crossword-app-backend.herokuapp.com'
-
-
 export default class componentName extends Component {
     constructor(props) {
         super(props);
@@ -19,10 +17,10 @@ export default class componentName extends Component {
             option4: '',
             save: '',
             count: 1,
+            order: 1,
         }
         this.mcqs(this.state.count)
     }
-
     mcqs = async (q) => {
 
         //console.log('calledd', q)
@@ -45,7 +43,8 @@ export default class componentName extends Component {
                 headers: {
                     'Accept': 'application/json',
                 },
-            }).then((response) => response.json())
+            })
+                .then((response) => response.json())
                 .then((data) => {
 
                     //console.log('Data---->', data?.qmcq[0])
@@ -75,21 +74,32 @@ export default class componentName extends Component {
         //console.log('value', this.state.save)
     }
     checkAnswer = async () => {
-        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/2/42/1/', {
+        let formdata = new FormData()
+        formdata.append('answer', this.state.save)
+        console.log('formdat', formdata)
+        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/2/42/' + this.state.order + '/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
             },
+            body: formdata
         }).then((response) => response.json())
             .then((data) => {
-
-                console.log('Data---->', data)
-                //return
-                if (this.state.save == data.answer) {
-                    alert("answer is correct")
+                //console.log('Data---->', data)
+                //console.log('Data---->++++++1111', this.state.save, '==', data.answer)
+                if (data.detail == 'Mash Allah') {
+                    this.setState({
+                        order: this.state.order + 1
+                    })
+                    //  console.log("Answer==========", data)
+                    alert(data.detail)
                     this.mcqs(this.state.count + 1)
                 }
                 else {
+                    //console.log("idhnk==========", data.answer)
+                    this.setState({
+                        order: this.state.order + 1
+                    })
                     alert(data.detail)
                     this.mcqs(this.state.count + 1)
                 }

@@ -63,22 +63,24 @@ export default class componentName extends Component {
                 </View>
                 <View style={styles.buttonviewsty}>
                     <TouchableOpacity
-                        onPress={() => Actions.crossword4()}
+                        onPress={() => Actions.crossword4({ param: '1-Down' })}
                         style={styles.inputrowview}>
                         <Text style={{ fontSize: 18, color: '#fff' }}>Down-1</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        //onPress={() => this.saveans(this.state.option2)}
+                        onPress={() => Actions.crossword4({ param: '2-Down' })}
                         style={styles.inputrowview}>
                         <Text style={{ fontSize: 18, color: '#fff' }}>Down-2</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.buttonviewsty}>
                     <TouchableOpacity
+                        onPress={() => Actions.crossword4({ param: '3-Across' })}
                         style={styles.inputrowview}>
                         <Text style={{ fontSize: 18, color: '#fff' }}>Across-3</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={() => Actions.crossword4({ param: '4-Across' })}
                         style={styles.inputrowview}>
                         <Text style={{ fontSize: 18, color: '#fff' }}>Across-4</Text>
                     </TouchableOpacity>
