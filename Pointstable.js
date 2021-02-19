@@ -1,18 +1,82 @@
 import { View, Icon, Input } from 'native-base';
 import React, { Component } from 'react';
-import { Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+
 export default class componentName extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            scores: [],
+            totalscore: '',
+        }
+        this.Get_Score()
+    }
+    Get_Score = async (id) => {
+        let userid = await AsyncStorage.getItem('userid')
+        let formdata = new FormData()
+        formdata.append('Score', this.state.answer)
+        //let userid = 1
+        //console.log('id in total likes api', userid)
+        let response = await fetch(
+            'https://crossword-app-backend.herokuapp.com/app/scores/1/',
+            {
+                method: 'Post',
+                headers: {
+                    'Accept': 'application/json',
+                },
+                body: formdata
+            },
+        ).then(response => response.json())
+            .then(responseJson => {
+                //console.log('courses', responseJson);
+                // const token = data.token;
+                // AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
+                this.setState({
+                    //userdata: data,
+                    scores: responseJson.scores,
+                    totalscore: responseJson.total_score
+                })
+                // console.log('courses++++++++++++++++++++++', this.state.courses)
+                return responseJson;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        //  console.log('data:>>',response)
+        return response;
+    }
+    renderItem = (data) => {
+
+        // console.log('courses in render', data)
+
+        return (
+            <View style={styles.view1sty}>
+                <View style={styles.view2sty}>
+                    <Icon style={styles.checkiconsty} type='Entypo' name='chevron-with-circle-right' />
+                </View>
+                <View style={styles.view3sty}>
+                    <Text style={styles.text1sty}>{data?.item?.course_name}</Text>
+                </View>
+                <View style={styles.view4sty}>
+                    <Text style={styles.text2sty}>
+                        {data?.item.score}
+                    </Text>
+                    <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
+
+                </View>
+
+            </View>
+        )
+    }
     render() {
         return (
             <ScrollView>
                 <View style={styles.container}>
-
-
                     <View style={{ marginRight: '88%' }}>
                         <Icon style={{ color: '#000002', fontSize: 55 }} type='Entypo' name='menu' />
                     </View>
-
                     <Image
                         source={require("./Pic/Tablepointimage.png")}
                     />
@@ -22,71 +86,16 @@ export default class componentName extends Component {
 
                     <View style={styles.scoreviewsty}>
                         <Icon style={styles.stariconsty} type='Entypo' name='star-outlined' />
-                        <Text style={styles.scoretextsty}> Score=12 </Text>
+                        <Text style={styles.scoretextsty}>Score={this.state.totalscore} </Text>
                     </View>
                     <Text style={styles.textsty}>
                         المقرات التي تم اكمالها
                     </Text>
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='AntDesign' name='check' />
-                        </View>
-
-                        <View style={styles.view3sty}>
-                            <Text style={styles.text1sty}> Course-01</Text>
-                        </View>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                4
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star' />
-
-                        </View>
-
-                    </View>
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='AntDesign' name='check' />
-                        </View>
-
-                        <View style={styles.view3sty}>
-                            <Text style={styles.text1sty}> Course-02</Text>
-                        </View>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                5
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star' />
-
-                        </View>
-                    </View>
-
-
-
-                    <View style={styles.view1sty}>
-                        <View style={styles.view2sty}>
-                            <Icon style={styles.checkiconsty} type='AntDesign' name='check' />
-                        </View>
-
-                        <View style={styles.view3sty}>
-                            <Text style={styles.text1sty}> Course-03</Text>
-                        </View>
-
-                        <View style={styles.view4sty}>
-                            <Text style={styles.text2sty}>
-                                6
-                            </Text>
-                            <Icon style={styles.stariconsty} type='Entypo' name='star' />
-
-                        </View>
-                    </View>
-
+                    <FlatList
+                        data={this.state.scores}
+                        renderItem={this.renderItem}
+                        keyExtractor={item => item.id}
+                    />
                     <View style={styles.view5sty}>
                         <TouchableOpacity
                             onPress={() => Actions.Homepage()}
@@ -95,14 +104,7 @@ export default class componentName extends Component {
                                 عودة للصفحة الرئيسية
                         </Text>
                         </TouchableOpacity>
-
                     </View>
-
-
-
-
-
-
                 </View>
             </ScrollView>
         );

@@ -7,15 +7,45 @@ export default class componentName extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            courses: [
-                { id: 1, name: 'Arabic' },
-                { id: 2, name: 'English' },
-                { id: 3, name: 'Math' },
-                { id: 4, name: 'Genral' },
-                { id: 5, name: 'Arabic' },
-
-            ]
+            top_3: [],
+            studentNme: '',
+            score: ''
         }
+        //this.Get_Top()
+    }
+    Get_Top = async () => {
+        // let userid = await AsyncStorage.getItem('userid')
+        //let formdata = new FormData()
+        f//ormdata.append('Score', this.state.answer)
+        //let userid = 1
+        //console.log('id in total likes api', userid)
+        let response = await fetch(
+            'https://crossword-app-backend.herokuapp.com/app/top3/',
+            {
+                method: 'Post',
+                headers: {
+                    'Accept': 'application/json',
+                },
+                // body: formdata
+            },
+        ).then(response => response.json())
+            .then(responseJson => {
+                //console.log('courses', responseJson);
+                // const token = data.token;
+                // AsyncStorage.setItem('userid', JSON.stringify(data.user_id))
+                this.setState({
+                    //userdata: data,
+                    top_3: responseJson.top_3,
+                    studentNme: responseJson.student_name
+                })
+                // console.log('courses++++++++++++++++++++++', this.state.courses)
+                return responseJson;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        //  console.log('data:>>',response)
+        return response;
     }
 
     render() {
@@ -49,12 +79,10 @@ export default class componentName extends Component {
                             <Text style={styles.textsty}>ملف المتعلم</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={styles.inputview}
-
-                        >
+                        <View
+                            style={styles.inputview}>
                             <Text style={styles.textsty}> المتعلمون الاوائل</Text>
-                        </TouchableOpacity>
+                        </View>
                     </View>
 
                     <View style={styles.imagesty}>
@@ -66,7 +94,7 @@ export default class componentName extends Component {
                         />
                         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={styles.textsty}>الوليد</Text>
-                            <Text style={styles.textsty}>السالم</Text>
+                            <Text style={styles.textsty}>{this.state.studentNme[0]}</Text>
                             <Text style={styles.textsty}>الخالد</Text>
                         </View>
                     </View>

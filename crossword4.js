@@ -29,11 +29,15 @@ export default class componentName extends Component {
             fill4: '',
             fill5: '',
             count: 1,
-            order: 1,
+            order: 5,
+            save: '',
             fillWords: [],
+            answer: '',
         }
         this.qmcq()
     }
+
+
     fillword1 = (ans) => {
         this.setState({
             fill1: ans,
@@ -41,16 +45,25 @@ export default class componentName extends Component {
             fill3: ans,
             fill4: ans,
             fill5: ans,
+
             // next: count + 1,
         })
         let wordArray = this.state.fillWords
         wordArray.push(ans);
+        let abc = wordArray.join('')
+        console.log('join', abc)
+        this.setState({
+            answer: abc
+        })
         this.setState({
             fillWords: wordArray
         })
+
         console.log("Array++++++++++", this.state.fillWords)
         //console.log("String++++++++++", toString())
     }
+
+
     qmcq = async () => {
         //console.log('pram+++', this.props?.param)
         //return
@@ -81,12 +94,27 @@ export default class componentName extends Component {
                 })
                 //console.log("image===============++>", this.state.cmcq)
             })
+
     }
+
+
+    saveans = async (ans) => {
+        this.setState({
+            save: ans,
+
+        })
+        //console.log('value', this.state.save)
+    }
+
+
     checkAnswer = async () => {
         let formdata = new FormData()
-        formdata.append('answer', this.state.save)
-        console.log('formdat', formdata)
-        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/2/42/' + this.state.order + '/', {
+        formdata.append('answer', this.state.answer)
+        //console.log('formdat', formdata)
+        //console.log("order=========>", this.props.order)
+        //console.log("Answer========>", answer)
+        //return
+        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/1/42/' + this.props.order + '/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -94,25 +122,34 @@ export default class componentName extends Component {
             body: formdata
         }).then((response) => response.json())
             .then((data) => {
-                //console.log('Data---->', data)
+                console.log('Data---->', data)
+
                 //console.log('Data---->++++++1111', this.state.save, '==', data.answer)
                 if (data.detail == 'Mash Allah') {
+                    console.log("Answer==========", data)
                     this.setState({
                         order: this.state.order + 1
                     })
-                    //  console.log("Answer==========", data)
+                    //console.log("Answer==========", data)
                     alert(data.detail)
-                    this.mcqs(this.state.count + 1)
+                    this.qmcq(this.state.count + 1)
                 }
                 else {
-                    //console.log("idhnk==========", data.answer)
+                    console.log("else Data==========", data)
                     this.setState({
                         order: this.state.order + 1
                     })
                     alert(data.detail)
-                    this.mcqs(this.state.count + 1)
+                    this.qmcq(this.state.count + 1)
                 }
             })
+        if (this.props.order < 8) {
+            Actions.crossword1()
+        }
+        else {
+            Actions.Pointstable()
+        }
+
     }
 
     render() {
@@ -247,8 +284,8 @@ export default class componentName extends Component {
                             <TouchableOpacity
                                 //onPress={() => this.mcqs(this.state.count + 1)}
                                 onPress={() => this.checkAnswer()}
-                                style={{ width: 100, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
-                                <Text>Next Question</Text>
+                                style={{ width: 130, height: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#2e86de', borderRadius: 10, marginTop: '8%' }}>
+                                <Text style={{ fontSize: 18, color: 'white' }}>Next Question</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

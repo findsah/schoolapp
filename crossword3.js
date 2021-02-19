@@ -76,8 +76,10 @@ export default class componentName extends Component {
     checkAnswer = async () => {
         let formdata = new FormData()
         formdata.append('answer', this.state.save)
-        console.log('formdat', formdata)
-        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/2/42/' + this.state.order + '/', {
+        //console.log('formdat', formdata)
+
+
+        await fetch('https://crossword-app-backend.herokuapp.com/app/answer/1/42/' + this.state.order + '/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -184,8 +186,8 @@ export default class componentName extends Component {
                 <TouchableOpacity
                     //onPress={() => this.mcqs(this.state.count + 1)}
                     onPress={() => this.checkAnswer()}
-                    style={{ width: 100, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: 'red' }}>
-                    <Text>Next Question</Text>
+                    style={{ width: 130, height: 60, alignItems: 'center', justifyContent: 'center', backgroundColor: '#2e86de', marginBottom: 20, borderRadius: 10 }}>
+                    <Text style={{ fontSize: 18, color: 'white' }}>Next Question</Text>
                 </TouchableOpacity>
             </ScrollView>
         );
